@@ -1,15 +1,15 @@
-#Countdown#
+# Countdown #
 
 Countdown timer for the PIC16F873
 
-##Commands##
+## Commands ##
  - l : load
  - s : start
  - # : 0-9 number
 
 The clock accepts commands via the UART configured at 9600 BAUD 8 data 1 stop
 
-##Example usage:##
+## Example usage: ##
 
 l0008124544 == "Load the following time: 0 years, 8 months, 12 hours, 45 minutes, 44 seconds
 s == "Start the timer"
