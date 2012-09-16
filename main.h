@@ -36,9 +36,14 @@
  *
  */
 
-
-#define     START_CMND      's' //unique "start the display" command
-#define     LOAD_CMND       'l' //unique "here is the time" command
+/** Unique "start the display" command. Implies that this is the last digit. */
+#define     START_CMND      's'
+/** UART start command indicating that this is the middle digit */
+#define     START_CMND_MID  ('t'+0x80)
+/** UART start command indicating that this is the first digit */
+#define     START_CMND_FIRST ('u'+0x80)
+/** unique "here is the time" command */
+#define     LOAD_CMND       'l'
 
 ////bytes for time to load into
 
@@ -53,7 +58,6 @@ typedef enum {
     LOAD,
     LOADING,
 }RX_STATUS;
-
 
 //encapsulates a single two digit display
 

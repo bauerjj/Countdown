@@ -78,8 +78,24 @@ static const uint8_t LSD_PORTC[] = {
     LED_LSD_PORTC_TL | LED_LSD_PORTC_MID
 };
 
+typedef enum {
+    SEGMENT_FIRST,      /**< Display the most sigificant value */
+    SEGMENT_MIDDLE,     /**< Display the middle value */
+    SEGMENT_LAST        /**< Display the least significant value */
+} SEGMENT;
+
+/** Which segment to display */
+extern SEGMENT seg;
+
+/** Set digit LEDs according to value stored in next_to_display */
 extern void display(void);
+
+/** Decrement value in segments and update next_to_display */
 extern void decrement(void);
+
+/** Write digit num to LEDs
+ * \param num number to display
+ */
 extern void displayNum(uint8_t num);
 
 #endif

@@ -189,18 +189,30 @@ void interrupt isr() {
     if (PIR1bits.RCIF) {
         PIR1bits.RCIF = 0;
 
-        TXREG = RCREG; //send back
-
         uart.rx = RCREG;
+
+        if (uart.rx == START_CMND) {
+                TXREG = START_CMND_MID; // Echo to the next digit
+                seg = SEGMENT_LAST;
+        } else if (uart.rx == START_CMND_MID) {
+                TXREG = START_CMND_FIRST; // Echo to the next digit
+                seg = SEGMENT_MIDDLE;
+        } else if (uart.rx == START_CMND_FIRST) {
+                // This is the last digit in the chain, so echo the original command instead.
+                TXREG = START_CMND;
+                seg = SEGMENT_FIRST;
+        } else {
+                // Not a 'start' command, so just echo it.
+                TXREG = uart.rx;
+        }
+
         switch (uart.status) {
             case IDLE:
-                if (uart.rx == START_CMND) {
-                    uart.status = DECR;
-                    decrement(); //in order to fill 'next_to_display'
-                    display();
-                    toggle = 1;
-                    T1CONbits.TMR1ON = 1;
-                }
+                uart.status = DECR;
+                decrement(); //in order to fill 'next_to_display'
+                display();
+                toggle = 1;
+                T1CONbits.TMR1ON = 1;
                 break;
             case DECR:
                 break;
