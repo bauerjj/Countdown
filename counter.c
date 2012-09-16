@@ -61,8 +61,35 @@ void decrement(void) {
                                 if (segments.day.h == 0) {
                                     segments.day.h = 3;
 
-                                    // need to decrement months
+                                    // -- begin decrement months
+                                    if (segments.month.l == 0) {
+                                        segments.month.l = 9;
 
+                                        if (segments.month.h == 0) {
+                                            segments.month.h = 3; // Note: This assumes 30 days in each month
+
+                                            // -- begin decrement years
+                                            if (segments.year.l == 0) {
+                                                segments.year.l = 9;
+
+                                                if (segments.year.h == 0) {
+                                                    // Counter has hit zero
+                                                    
+                                                } else {
+                                                    segments.year.h--;
+                                                }
+                                            } else {
+                                                segments.year.l--;
+                                            }
+
+                                            // -- end decrement years
+                                        } else {
+                                            segments.month.h--;
+                                        }
+                                    } else {
+                                            segments.month.l--;
+                                    }
+                                    // -- end decrement months
                                 } else {
                                     segments.day.h--;
                                 }
